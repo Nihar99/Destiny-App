@@ -1,7 +1,7 @@
 import 'package:destinyapp/story.dart';
 
 class StoryBrain {
-  int storyNumber = 0;
+  int _storyNumber = 0;
   List<Story> _storyData = [
     Story(
         storyTitle:
@@ -34,18 +34,44 @@ class StoryBrain {
         choice2: '')
   ];
   getStory() {
-    return _storyData[0].storyTitle;
+    return _storyData[_storyNumber].storyTitle;
   }
 
   getChoice1() {
-    return _storyData[0].choice1;
+    return _storyData[_storyNumber].choice1;
   }
 
   getChoice2() {
-    return _storyData[0].choice2;
+    return _storyData[_storyNumber].choice2;
   }
 
-  nextStory(int number) {
-    //
+  nextStory(int choice) {
+    if (choice == 1 && _storyNumber == 0) {
+      _storyNumber = 2;
+    } else if (choice == 2 && _storyNumber == 0) {
+      _storyNumber = 1;
+    } else if (choice == 1 && _storyNumber == 1) {
+      _storyNumber = 2;
+    } else if (choice == 2 && _storyNumber == 1) {
+      _storyNumber = 3;
+    } else if (choice == 1 && _storyNumber == 2) {
+      _storyNumber = 5;
+    } else if (choice == 2 && _storyNumber == 2) {
+      _storyNumber = 4;
+    } else if (_storyNumber == 3 || _storyNumber == 4 || _storyNumber == 5) {
+      restart();
+    }
+  }
+
+  bool buttonShouldBeVisible() {
+    if (_storyNumber < 3) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void restart() {
+    _storyNumber = 0;
   }
 }
